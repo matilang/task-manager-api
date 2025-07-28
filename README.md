@@ -2,8 +2,8 @@
 
 A simple task management REST API built with FastAPI.
 
-In this repository, I regularly push new changes to build and enhance my backend development and database management skills.  
-The projects focus on practical applications using FastAPI, relational databases, and best practices in API design.
+I regularly push new changes in this repository to build and enhance my backend development and database management skills.  
+The project's focus is on practical applications using FastAPI, relational databases, and best practices in API design.
 
 ## Features
 
