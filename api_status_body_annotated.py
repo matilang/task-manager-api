@@ -4,6 +4,61 @@ from pydantic import BaseModel, Field
 from typing import Annotated, Any
 from random import random
 
+"""
+Task: Simple API for Managing Movies
+
+Description:
+Create an API that stores a list of movies in memory.
+
+Each movie has:
+- id: int
+- title: str
+- year: int
+- rating: float (0.0–10.0)
+
+Initial data:
+movies = []
+
+Endpoints to implement:
+
+1. POST /movies/ – Add a new movie
+   Body:
+      MovieIn(BaseModel) with: title, year, rating
+   Validations:
+      year: 1900 <= year <= 2100
+      rating: 0.0 <= rating <= 10.0
+   Behavior:
+      - API assigns id automatically
+      - Return 201 Created
+      - response_model = Movie (Movie includes id)
+
+2. GET /movies/{movie_id}
+   - Path parameter: movie_id >= 1
+   - Return 200 OK with movie if found
+   - Return 404 if not found
+
+3. GET /movies/
+   - Optional query parameters:
+       min_rating (0.0–10.0)
+       max_year
+   - Filter movies if parameters are provided
+   - Return list of movies (response_model = list[Movie])
+
+4. DELETE /movies/{movie_id}
+   - If exists: remove and return 204 No Content
+   - Else: return 404 Not Found
+
+5. GET /movies/top/
+   - Query: limit (default 3, 1 <= limit <= 10)
+   - Sort by rating descending
+   - Return top `limit` movies
+
+Additional requirements:
+- Use a separate MovieOut for responses
+- Inside functions, use object attributes (movie.title) instead of class-level references
+- Handle status codes explicitly: 201, 204, 404, 400
+"""
+
 app = FastAPI()
 
 movies = {
