@@ -78,7 +78,7 @@ class MovieOut(Movie):
     id : int
     
 @app.post('/movies/', response_model=MovieOut, status_code=status.HTTP_201_CREATED)
-async def add_movie(movie : MovieIn) -> Any:
+async def add_movie(movie : MovieIn):
     
     new_movie_id = max(movies.keys()) + 1 if movies else 1
     movies[new_movie_id] = movie.dict()
@@ -89,12 +89,12 @@ async def get_movie(movie_id : Annotated[int, Path(ge=1)]):
     
     movie = movies.get(movie_id)
     if movie:    
-        return {"id" : movie_id, **movie[movie_id]}
+        return {"id" : movie_id, **movie}
     else:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     
 @app.get('/movies/', response_model=list[Movie])
-async def filter_movies(min_rating : Annotated[float | None, Query(ge=0, le=10.0)] = None, max_year : int | None = None) -> Any:
+async def filter_movies(min_rating : Annotated[float | None, Query(ge=0, le=10.0)] = None, max_year : int | None = None):
     
     movie_list = []
     for movie_id , m in movies.items():
@@ -113,7 +113,7 @@ async def delete_movie(movie_id : Annotated[int, Path()]):
         return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 @app.get('/movies/top/', response_model=list[Movie])
-async def get_top_rated(limit : Annotated[int, Query(ge=1, lt=10)] = 3) -> Any:
+async def get_top_rated(limit : Annotated[int, Query(ge=1, lt=10)] = 3):
 
     sorted_movies = sorted(movies.items(), key=lambda item: item[1]['rating'], reverse=True)
     
